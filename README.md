@@ -18,7 +18,12 @@ Mediantes peticiones podemos obtener los vinos.
 |<img align="center" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEhwv2Rja5M3emJCaj_oGEoDjBNFqT_QYVTp5PUaaajTRTRYmjLsoa3-kHcd2r5omts9Q&usqp=CAU" width="100" alt="Postman">|Realizar diseño, construcción, pruebas e iteración de la API |
 
 
-### Dependencias externas.
+### Dependencias externas de la libreria mavern.
+
+JSoup API muy práctica para obtener URL y extraer y manipular datos, utilizando lo mejor de los métodos DOM de HTML5 y los selectores CSS. [Jsoup](https://mvnrepository.com/artifact/org.jsoup/jsoup).<img align="left" src="https://i.pcmag.com/imagery/reviews/04C2m2ye5UfXyb5x5WWIsZ4-19..v1625759628.png" width="100" alt="Jsoup"> 
+
+Proyecto de Jakarta que extiende la funcionalidad del paquete estándar java.lang. [Apache commons lang](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3).<img align="left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apache_Commons_logo.svg/1200px-Apache_Commons_logo.svg.png" width="100" alt="Apache commons lang"> 
+
 
 ### Herramientas de trabajo.
 
