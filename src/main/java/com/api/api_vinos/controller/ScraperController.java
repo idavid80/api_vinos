@@ -21,8 +21,18 @@ public class ScraperController {
     @Autowired
     ScraperService scraperService;
 
+	@GetMapping("/prueba")
+	public String pruebaControlador() {
+		return "Controlador funcionando correctamente";
+	}
+	
     @GetMapping(path = "/{pagina}")
-    public Set<ResponseDTO> getVehicleByModel(@PathVariable String pagina) {
+    public Set<ResponseDTO> getModeloVino(@PathVariable String pagina) {
         return  scraperService.getModeloVino(pagina);
     }
+    /*
+    @GetMapping(path = "/obtener_todo")
+    public Set<ResponseDTO> getModeloVino() {
+        return  scraperService.getModeloVino();
+    }  */
 }

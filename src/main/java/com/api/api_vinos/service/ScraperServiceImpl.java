@@ -25,16 +25,14 @@ public class ScraperServiceImpl implements ScraperService {
 	public Set<ResponseDTO> getModeloVino(String pagina) {
 		// Set para almacenar elementos únicos
 		Set<ResponseDTO> responseDTOS = new HashSet<>();
+		
 		// Pasando por las urls
 		for (String url : urls) {
-
 			if (url.contains("wineissocial")) {
 				// metodo para extraer datos de wineissocial.com
 				extraerDatosWineIsSocial(responseDTOS, url + pagina);
 			}
-
 		}
-
 		return responseDTOS;
 	}
 
@@ -69,7 +67,63 @@ public class ScraperServiceImpl implements ScraperService {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+}
 
+/*
+ Extraer todos los datos, quizas se mejor hacerlo por hilos o con TimerTask
+	@Override
+	public Set<ResponseDTO> getAllWines() {
+		// Set para almacenar elementos únicos
+		Set<ResponseDTO> responseDTOS = new HashSet<>();
+		// Pasando por las urls
+
+		for (String url : urls) {
+
+			if (url.contains("wineissocial")) {
+				// metodo para extraer datos de wineissocial.com
+
+				extraerDatosWineIsSocial(responseDTOS);
+			}
+		}
+		return responseDTOS;
 	}
 
-}
+	private void extraerDatosWineIsSocial(Set<ResponseDTO> responseDTOS) {
+
+		int vinoPorPagina = 40;
+		String url = "https://wineissocial.com/1719-vinos?page=";
+		try {
+			for (int paginaHTML = 1; paginaHTML < 55; paginaHTML++) {
+				// cargando el HTML en un objeto Document
+				String pagina = String.valueOf(paginaHTML);
+				Document document = Jsoup.connect(url + pagina).get();
+				// Seleccionando el elemento que contiene la lista de modelos de vinos
+
+				for (int i = 0; i < vinoPorPagina; i++) {
+					Element element = document.getElementsByClass("product-meta").get(i);
+
+					// obteniendo todos los elementos con la clase donde estan los datos para la
+					// BBDD
+					Elements elements = element.getElementsByTag("a");
+					// Obtener elementos de los elementos html
+					System.out.print(elements);
+					for (Element modelos : elements) {
+						ResponseDTO responseDTO = new ResponseDTO();
+
+						if (!StringUtils.isEmpty(modelos.text())) {
+							// mapping data to the model class
+							responseDTO.setModeloVino(modelos.text());
+							responseDTO.setUrl(modelos.attr("href"));
+						}
+						if (responseDTO.getUrl() != null)
+							responseDTOS.add(responseDTO);
+					}
+				}
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+	}
+*/
