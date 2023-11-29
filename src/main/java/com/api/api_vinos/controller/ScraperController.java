@@ -22,7 +22,7 @@ public class ScraperController {
     ScraperService scraperService;
 
     @GetMapping(path = "/{pagina}")
-    public Set<ResponseDTO> getVehicleByModel(@PathVariable String pagina) {
+    public Set<ResponseDTO> getModeloVino(@PathVariable String pagina) {
         return  scraperService.getModeloVino(pagina);
     }
 }
