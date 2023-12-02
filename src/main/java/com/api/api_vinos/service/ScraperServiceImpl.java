@@ -17,42 +17,98 @@ import com.api.api_vinos.entity.ResponseDTO;
 
 @Service
 public class ScraperServiceImpl implements ScraperService {
-	// Lectura de datos de un fichero de propiedades a una lista
-	@Value("#{'${website.urls}'.split(',')}")
-	List<String> urls;
 
 	@Override
-	public Set<ResponseDTO> getModeloVino(String pagina) {
+	public Set<ResponseDTO> getVinoPorPagina(String pagina) {
+
 		// Set para almacenar elementos únicos
 		Set<ResponseDTO> responseDTOS = new HashSet<>();
 		// Pasando por las urls
-		for (String url : urls) {
 
-			if (url.contains("wineissocial")) {
-				// metodo para extraer datos de wineissocial.com
-				extraerDatosWineIsSocial(responseDTOS, url + pagina);
-			}
+		// metodo para extraer datos de wineissocial.com
+		extraerDatosWineIsSocial(responseDTOS, pagina);
 
+		return responseDTOS;
+	}
+
+	@Override
+	public Set<ResponseDTO> getTodosLosVino() {
+
+		String url = "https://wineissocial.com/1719-vinos?page=";
+		// Set para almacenar elementos únicos
+		Set<ResponseDTO> responseDTOS = new HashSet<>();
+		// Pasando por las urls
+		int numeroPaginaHTML = getNumeroPaginasHTML(url);
+		// metodo para extraer datos de wineissocial.com
+		for (int i = 1; i < numeroPaginaHTML; i++) {
+			extraerDatosWineIsSocial(responseDTOS, String.valueOf(i));
 		}
 
 		return responseDTOS;
 	}
 
-	private void extraerDatosWineIsSocial(Set<ResponseDTO> responseDTOS, String url) {
+	@Override
+	public Set<ResponseDTO> getVinoDesdeHasta(String desde, String hasta) {
+		int inicio = Integer.parseInt(desde);
+		int fin = Integer.parseInt(hasta);
+		// Set para almacenar elementos únicos
+		Set<ResponseDTO> responseDTOS = new HashSet<>();
+		// Pasando por las urls
+		for (int paginaHTML = inicio; paginaHTML < fin; paginaHTML++) {
 
-		int vinoPorPagina = 40;
+			System.out.println("Extrayendo... Pagina: " + inicio + "/" + fin);
+			// metodo para extraer datos de wineissocial.com
+			extraerDatosWineIsSocial(responseDTOS, String.valueOf(paginaHTML));
+		}
+		return responseDTOS;
+	}
+
+	private int getNumVinoPorPagina(String url) {
+
+		int vinoPorPagina = 0;
+		try {
+			Document document = Jsoup.connect(url).get();
+			vinoPorPagina = document.getElementsByClass("product-meta").size();
+
+			System.out.println("Esta pagina tiene " + vinoPorPagina + " modelos de vinos");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return vinoPorPagina;
+	}
+
+	private int getNumeroPaginasHTML(String url) {
+
+		int paginasHTML = 1;
+		try {
+			Document document = Jsoup.connect(url + paginasHTML).get();
+			String obtenerNumeroPagina = document.getElementsByAttributeValue("rel", "nofollow").last().text();
+			paginasHTML = Integer.parseInt(obtenerNumeroPagina);
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return paginasHTML;
+	}
+
+	private void extraerDatosWineIsSocial(Set<ResponseDTO> responseDTOS, String paginaHTML) {
+
+		String url = "https://wineissocial.com/1719-vinos?page=";
 
 		try {
-
-			// cargando el HTML en un objeto Document
-			Document document = Jsoup.connect(url).get();
-			// Seleccionando el elemento que contiene la lista de modelos de vinos
-
+			Document document = Jsoup.connect(url + paginaHTML).get();
+			int vinoPorPagina = getNumVinoPorPagina(url + paginaHTML);
+			// System.out.println("Extrayendo " + vinoPorPagina + " vinos pagina " +
+			// paginaHTML + "/" + numeroPaginaHTML);
 			for (int i = 0; i < vinoPorPagina; i++) {
+
 				Element element = document.getElementsByClass("product-meta").get(i);
-				// obteniendo todos los elementos con la clase donde estan los datos para la
-				// BBDD
+
+				// obtener todos los elementos con la clase donde estan los datos para la BBDD
 				Elements elements = element.getElementsByTag("a");
+
 				// Obtener elementos de los elementos html
 				for (Element modelos : elements) {
 					ResponseDTO responseDTO = new ResponseDTO();
@@ -62,12 +118,15 @@ public class ScraperServiceImpl implements ScraperService {
 						responseDTO.setModeloVino(modelos.text());
 						responseDTO.setUrl(modelos.attr("href"));
 					}
-					if (responseDTO.getUrl() != null)
+					if (responseDTO.getUrl() != null) {
 						responseDTOS.add(responseDTO);
+					}
 				}
 			}
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
+
 		}
 
 	}
