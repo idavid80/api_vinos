@@ -4,7 +4,14 @@ import lombok.Data;
 
 @Data
 public class ResponseDTO {
-    String modeloVino;
+	int idModeloVino;
+    public int getIdModeloVino() {
+		return idModeloVino;
+	}
+	public void setIdModeloVino(int idModeloVino) {
+		this.idModeloVino = idModeloVino;
+	}
+	String modeloVino;
     String url;
     
 	public String getModeloVino() {
