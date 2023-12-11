@@ -4,7 +4,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.springframework.stereotype.Repository;
+
 /*
+
 @Repository
 public class CreacionBaseDatosRepository {
 	
@@ -16,32 +18,25 @@ public class CreacionBaseDatosRepository {
 		conexion = conexionRepository.abrirConexion();
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.execute("create database api_vinos;\r\n"
-					+ "	\r\n"
-					+ "	use prueba;\r\n"
-					+ "	\r\n"
-					+ "	CREATE TABLE Paises(\r\n"
-					+ "		ID int auto_increment PRIMARY KEY,\r\n"
-					+ "		Nombre varchar(250) NOT NULL\r\n"
-					+ "	);\r\n"
-					+ "	\r\n"
-					+ "	CREATE TABLE DenominacionOrigen(\r\n"
-					+ "		ID int auto_increment PRIMARY KEY,\r\n"
-					+ "		Nombre varchar(250) NOT NULL,\r\n"
-					+ "		IDPais int NOT NULL,\r\n"
-					+ "		CONSTRAINT fk_pais FOREIGN key(IDPais) REFERENCES Paises(ID)\r\n"
-					+ "	);\r\n"
-					+ "	\r\n"
-					+ "	CREATE TABLE Vinos(\r\n"
-					+ "		ID int auto_increment PRIMARY KEY,\r\n"
-					+ "		Nombre varchar(250) NOT NULL,\r\n"
-					+ "		URL varchar(500) NOT NULL unique,\r\n"
-					+ "		Imagen varchar(500) null\r\n"
-					+ "		IDPais int NOT NULL,\r\n"
-					+ "		IDDenominacionOrigen int NOT NULL,\r\n"
-					+ "		CONSTRAINT fk_pais_datosvino FOREIGN KEY(IDPais) REFERENCES Paises(ID),\r\n"
-					+ "		CONSTRAINT fk_denominacionOrigen_datosvino  FOREIGN KEY(IDDenominacionOrigen) REFERENCES DenominacionOrigen(ID),\r\n"
-					+ "	);");
+			stmt.executeUpdate("create database api_vinos;"
+					+ "	use prueba;"
+					+ "	CREATE TABLE Paises("
+					+ "		ID int auto_increment PRIMARY KEY,"
+					+ "		Nombre varchar(250) NOT NULL);"
+					+ "	CREATE TABLE DenominacionOrigen("
+					+ "		ID int auto_increment PRIMARY KEY,"
+					+ "		Nombre varchar(250) NOT NULL,"
+					+ "		IDPais int NOT NULL,"
+					+ "		CONSTRAINT fk_pais FOREIGN key(IDPais) REFERENCES Paises(ID));"
+					+ "	CREATE TABLE Vinos("
+					+ "		ID int auto_increment PRIMARY KEY,"
+					+ "		Nombre varchar(250) NOT NULL,"
+					+ "		URL varchar(500) NOT NULL unique,"
+					+ "		Imagen varchar(500) null,"
+					+ "		IDPais int NOT NULL,"
+					+ "		IDDenominacionOrigen int NOT NULL,"
+					+ "		CONSTRAINT fk_pais_datosvino FOREIGN KEY(IDPais) REFERENCES Paises(ID),"
+					+ "		CONSTRAINT fk_denominacionOrigen_datosvino  FOREIGN KEY(IDDenominacionOrigen) REFERENCES DenominacionOrigen(ID));");
 			conexionRepository.cerrarConexion(conexion);
 		} catch (SQLException e) {
 			e.printStackTrace();

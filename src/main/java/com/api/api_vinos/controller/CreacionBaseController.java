@@ -19,8 +19,8 @@ public class CreacionBaseController {
 	CreacionBaseDatosService conexionService;
 	/*
 	@ResponseBody
-	@GetMapping("/guardarPreguntas")
-	public String guardarPreguntas() {
+	@GetMapping("/crearBaseDatos")
+	public String crearBaseDatos() {
 		conexionService.crearBase();
 		return "Base de datos creada";
 	}
