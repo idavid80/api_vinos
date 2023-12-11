@@ -1,5 +1,6 @@
 package com.api.api_vinos.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +17,51 @@ public class DatosTecnicosController {
 
     @Autowired
     DatosTecnicosService datosTecnicos;
+    
+    
 
     @GetMapping(path = "/datos-tecnicos/prueba")
     public String comprobarConexion() {
         return "Controlador funcionando correctamente";
     }
-
+    
+    @GetMapping(path = "/datos-tecnicos/getDatosTecnicosDTOPorPagina")
+    Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(@PathVariable String pagina){
+    	return datosTecnicos.getDatosTecnicosDTOPorPagina(pagina);
+    }
+    /*
     @GetMapping(path = "/datos-tecnicos/idModeloVino{idModeloVino}")
-    public Set<DatosTecnicosDTO> getDatosTecnicosById(@PathVariable String idModeloVino) {
+    public DatosTecnicosDTO getDatosTecnicosById(@PathVariable String idModeloVino) {
     	System.out.print("Controlador" + idModeloVino);
         return  datosTecnicos.getDatosTecnicosById(idModeloVino);
      
     }
-    /*
+   
     @GetMapping(path = "/datos-tecnicos/idVino{idModeloVino}")
     public String getDatosTecnicosById(@PathVariable String idModeloVino) {
     	System.out.print("Controlador" + idModeloVino);
         return  idModeloVino;
      
     }
-     */
+     
     @GetMapping(path = "/datos-tecnicos/region{region}")
-    public Set<DatosTecnicosDTO> getVinosPorRegiones(@PathVariable String region) {
+    public DatosTecnicosDTO getVinosPorRegiones(@PathVariable String region) {
     	
         return  datosTecnicos.getVinosPorRegiones(region);
     }
     
     @GetMapping(path = "/datos-tecnicos/pais{pais}")
-    public Set<DatosTecnicosDTO> getVinosPorRPaises(@PathVariable String pais) {
+    public DatosTecnicosDTO getVinosPorRPaises(@PathVariable String pais) {
     	
         return  datosTecnicos.getVinosPorPaises(pais);
     }
+   
+    
+    @GetMapping(path = "/datos-tecnicos/insertar-datos-tecnicos")
+    public List<DatosTecnicosDTO> insertarDatosTecnicosBD() {
+    	
+        return  datosTecnicos.insertarDatosTecnicosBD();
+    }
+     */
     
 }

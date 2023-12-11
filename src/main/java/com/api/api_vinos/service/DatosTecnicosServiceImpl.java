@@ -4,114 +4,143 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 
 import com.api.api_vinos.entity.DatosTecnicosDTO;
-import com.api.api_vinos.entity.ResponseDTO;
+import com.api.api_vinos.repository.ConexionBD;
 
 @Service
 public class DatosTecnicosServiceImpl implements DatosTecnicosService {
 
-	
-	
-	@Override
-	public Set<DatosTecnicosDTO> setDatosTecnicos(ResponseDTO responseDTO) {
-		// Set para almacenar elementos únicos
-		Set<DatosTecnicosDTO> datosTecnicosDTO = new HashSet<>();
-		// Obtenemos el id del ModeloVino
-		int idModeloVino = responseDTO.getIdModeloVino();
-		// metodo para extraer datos de wineissocial.com
-		obtenerDatosTecnicosById(datosTecnicosDTO, idModeloVino);
+	protected ConexionBD repo;
 
-		return datosTecnicosDTO;
-	}
-
-	@Override
-	public Set<DatosTecnicosDTO> getVinosPorPaises(String pais) {
+	public Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(String pagina) {
 
 		// Set para almacenar elementos únicos
-		Set<DatosTecnicosDTO> datosTecnicosDTO = new HashSet<>();
+		Set<DatosTecnicosDTO> datosTecnicos = new HashSet<>();
 		// Pasando por las urls
 
 		// metodo para extraer datos de wineissocial.com
-		// extraerDatosTecnicosURL(datosTecnicosDTO, pais);
-		obtenerDatosTecnicosById(datosTecnicosDTO, 1);
-		return datosTecnicosDTO;
-	}
+		extraerDatosTecnicos(datosTecnicos, pagina);
 
-	@Override
-	public Set<DatosTecnicosDTO> getVinosPorRegiones(String regiones) {
-
-		// Set para almacenar elementos únicos
-		Set<DatosTecnicosDTO> datosTecnicosDTO = new HashSet<>();
-		// Pasando por las urls
-
-		// metodo para extraer datos de wineissocial.com
-		obtenerDatosTecnicosById(datosTecnicosDTO, 0);
-
-		return datosTecnicosDTO;
+		return datosTecnicos;
 	}
 	
-	public Set<DatosTecnicosDTO> getDatosTecnicosById(String idModeloVino) {
-		
-		int id = Integer.parseInt(idModeloVino);
-		// Set para almacenar elementos únicos
-		Set<DatosTecnicosDTO> datosTecnicosDTO = new HashSet<>();
-		// select modelo_vino id = idModeloVino
-		ResponseDTO modeloVino = new ResponseDTO();
-		// Comprobamos que el id que recibimos coincide con el de la base de datos
-		
-		obtenerDatosTecnicosById(datosTecnicosDTO, 0);;
-		/*
-		if(modeloVino.getIdModeloVino() == id) {
-			obtenerDatosTecnicosById(datosTecnicosDTO, id);
-		};
-*/
-		// metodo para extraer datos de wineissocial.com
-		// extraerDatosTecnicosURL(datosTecnicosDTO, regiones);
+	private void extraerDatosTecnicos(Set<DatosTecnicosDTO> datos, String url) {
 
-		return datosTecnicosDTO;
-	}
-	
-	
-	private void obtenerDatosTecnicosById(Set<DatosTecnicosDTO> datosTecnicosDTOS, int idModeloVino) {
-		
-		ResponseDTO modeloVino = new ResponseDTO();
-		idModeloVino = 0;
-		//String url = modeloVino.getUrl();
-		
-		// url prueba		
-		String url = "https://wineissocial.com/1000069-26761-chivite-coleccion-125-blanco-vino-blanco.html#/172-anada-2019";
 
-		extraerDatosTecnicosURL(datosTecnicosDTOS, url);
-	}
-	
-	private void extraerDatosTecnicosURL(Set<DatosTecnicosDTO> datosTecnicosDTO, String url) {
+		// Obtenemos el ID del modelo vino
+		
 
 		try {
+
+			// Buscamos en la url de datos tecnicos del modelo de vino
 			Document document = Jsoup.connect(url).get();
 
 			// Obtener elementos de los lista datos tecnicos del html
 			Element element = document.getElementsByClass("especial izda col-xs-6").first();
 
 
-			DatosTecnicosDTO datos = new DatosTecnicosDTO();
-			
-			
-			datos.setPais(element.getElementsByClass("pais").text().replace("País: ", ""));
-			datos.setRegion(element.getElementsByClass("denominacion").text().replace("Zona/D.O.: ", ""));
+				DatosTecnicosDTO datoTecnicosDTO = new DatosTecnicosDTO();
 
-			if (datos.getPais() != null) {
-				datosTecnicosDTO.add(datos);
-			}
+				if (!StringUtils.isEmpty(element.getElementsByClass("pais").text())) {
+					datoTecnicosDTO.setPais(element.getElementsByClass("pais").text().replace("País: ", ""));
+					datoTecnicosDTO.setRegion(element.getElementsByClass("denominacion").text().replace("Zona/D.O.: ", ""));
+				}
+				if (datoTecnicosDTO.getPais() != null) {
+					datos.add(datoTecnicosDTO);
+				}
 		} catch (IOException ex) {
 			ex.printStackTrace();
 
 		}
+		System.out.println("extraerDatosTecnicos" + datos);
+	}
+}		
+
+	
+	/*
+	@Override
+	public DatosTecnicosDTO setDatosTecnicos(DatosTecnicosDTO datosTecnicos, String url) {
+		datosTecnicos = new DatosTecnicosDTO();
+		extraerDatosTecnicos(datosTecnicos, url);
+		System.out.println("setDatosTecnicos" + datosTecnicos);
+		
+		return datosTecnicos;
+	}
+
+	private void extraerDatosTecnicos(DatosTecnicosDTO datos, String url) {
+
+		datos = new DatosTecnicosDTO();
+
+		// Obtenemos el ID del modelo vino
+		
+
+		try {
+
+			// Buscamos en la url de datos tecnicos del modelo de vino
+			Document document = Jsoup.connect(url).get();
+
+			// Obtener elementos de los lista datos tecnicos del html
+			Element element = document.getElementsByClass("especial izda col-xs-6").first();
+
+			datos.setPais(element.getElementsByClass("pais").text().replace("País: ", ""));
+			datos.setRegion(element.getElementsByClass("denominacion").text().replace("Zona/D.O.: ", ""));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+
+		}
+		System.out.println("extraerDatosTecnicos" + datos);
+	}
+
+	public DatosTecnicosDTO rellenarDatosTecnicosDTO(VinoDTO vino) {
+		DatosTecnicosDTO datosTecnicos = new DatosTecnicosDTO();
+		
+		datosTecnicos.setIdModeloVino(vino.getIdModeloVino());
+		
+		extraerDatosTecnicos(datosTecnicos, vino.getUrl());
+		
+		System.out.println("rellenarDatosTecnicosDTO" + datosTecnicos);
+		return datosTecnicos;
+		
+		
+	}
+	public List<DatosTecnicosDTO> insertarDatosTecnicosBD() {
+
+		List<DatosTecnicosDTO> listaDTO = new ArrayList<>();
+		// Obtenemos una lista de vinos desde la base Datos
+		repo.abrirConexion();
+		
+		
+		
+		try {
+			List<VinoDTO> listavinos = repo.getAllVinos();
+			System.out.println("rellenarDatosTecnicosDTO" + listavinos);
+			for (VinoDTO vino : listavinos) {
+
+				listaDTO.add(rellenarDatosTecnicosDTO(vino));
+			}
+		}		 catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+		repo.cerrarConexion();
+
+		// repo.insertarDatosTecnicos(datosTecnicosDTO);
+
+		return listaDTO;
 
 	}
-	
+
+	public void insertarDatosTecnicosByIdVino(Vino vino) {
+
+	}
+
 }
+*/

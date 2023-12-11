@@ -1,15 +1,26 @@
 package com.api.api_vinos.service;
 
+import java.util.List;
 import java.util.Set;
 
-import com.api.api_vinos.entity.ResponseDTO;
+import com.api.api_vinos.entity.DatosTecnicosDTO;
+import com.api.api_vinos.entity.VinoDTO;
 
 public interface ScraperService {
 	// public Set<ResponseDTO> getModeloVino(String modeloVino);
-	Set<ResponseDTO> getVinoPorPagina(String pagina);
+	Set<VinoDTO> getVinoPorPagina(String pagina);
 
-	Set<ResponseDTO> getTodosLosVino();
+	Set<VinoDTO> getTodosLosVino();
 
-	Set<ResponseDTO> getVinoDesdeHasta(String desde, String hasta);
+	Set<VinoDTO> getVinoDesdeHasta(String desde, String hasta);
+	
+	int insertaVinosPorPagHTML(String pagina);
+	
+	List<DatosTecnicosDTO> getListDatosTecnicosDTO();
+	
+	int insertaDatosTecnicosBD();
+	
+	//Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(vinoDTOS vino);
+
 
 }

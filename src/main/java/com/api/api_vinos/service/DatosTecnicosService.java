@@ -3,17 +3,19 @@ package com.api.api_vinos.service;
 import java.util.Set;
 
 import com.api.api_vinos.entity.DatosTecnicosDTO;
-import com.api.api_vinos.entity.ResponseDTO;
 
 public interface DatosTecnicosService {
-	
+
+	Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(String pagina);
 	// setDatosTecnicos necesitaria la url del modelo vino
-	Set<DatosTecnicosDTO> setDatosTecnicos(ResponseDTO responseDTO);
+	//DatosTecnicosDTO setDatosTecnicos(DatosTecnicosDTO datosTecnicos, String url);
 	
-	Set<DatosTecnicosDTO> getDatosTecnicosById(String idModeloVino);
+//	DatosTecnicosDTO getDatosTecnicosById(String idModeloVino);
+
+//	DatosTecnicosDTO getVinosPorPaises(String pais);
 	
-	Set<DatosTecnicosDTO> getVinosPorPaises(String pais);
+//	DatosTecnicosDTO getVinosPorRegiones(String regiones);
 	
-	Set<DatosTecnicosDTO> getVinosPorRegiones(String regiones);
+//	List<DatosTecnicosDTO> insertarDatosTecnicosBD();
 
 }

@@ -5,6 +5,7 @@ import java.sql.Statement;
 
 import org.springframework.stereotype.Repository;
 
+/*
 
 @Repository
 public class CreacionBaseDatosRepository {
@@ -42,4 +43,18 @@ public class CreacionBaseDatosRepository {
 		}
 	}
 	
+	public void crearBaseDatos() {
+		
+		bbddRepositorio.crearBaseDatos();
+	}
+	
+	public void crearTablaVinos() {
+		bbddRepositorio.crearTablaVinos();
+	}
+	
+	public void crearTablaDatosTecnicos() {
+		bbddRepositorio.crearTablaDatosTecnicos();
+	}
+	
 }
+*/

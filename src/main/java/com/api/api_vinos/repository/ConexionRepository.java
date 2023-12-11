@@ -19,7 +19,7 @@ public Connection conexion;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             conexion = DriverManager.getConnection(
-                    connectionUrl, "guilla", "guilla");
+                    connectionUrl, "root", "");
             System.out.println("Conectado...");
         } catch (SQLException | ClassNotFoundException ce) {
             ce.printStackTrace();
