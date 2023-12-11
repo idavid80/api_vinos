@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimerTask;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -250,6 +251,37 @@ public class ScraperServiceImpl implements ScraperService {
 
 		}
 	}
+	
+	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+	
+	public void insertaVinosPorPagHTMLTimerTask(String pagina) {
+
+		List<VinoDTO> listaVinos = hashToList(getVinoPorPagina(pagina));
+
+		insertarVinoConTimerTask(listaVinos);
+
+	}
+	
+	public void insertarVinoConTimerTask(List<VinoDTO> listaVinos) {
+	
+	repo.abrirConexion();
+	
+	int vinosIntroducidos = 1;
+	for (VinoDTO vino : listaVinos) {
+	repo.insertarVinoConTimerTask(vino);
+	
+	vinosIntroducidos++;
+	
+	}
+	
+	repo.cerrarConexion();
+	
+	}
+	
+	
+	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 }
 /*
  * 

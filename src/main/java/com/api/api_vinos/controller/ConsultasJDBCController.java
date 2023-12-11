@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.api.api_vinos.entity.Vino;
+import com.api.api_vinos.entity.Vino_DatosTecnicos_aux;
 import com.api.api_vinos.service.ConsultasJDBCService;
 
 @Controller
@@ -19,7 +19,7 @@ public class ConsultasJDBCController {
 	
 	@ResponseBody
 	@GetMapping("/mostrarDatosVino")
-	public ArrayList<Vino> mostrarDatosVino() {
+	public ArrayList<Vino_DatosTecnicos_aux> mostrarDatosVino() {
 		return conexionService.sacarDatosVino();
 	}
 	
@@ -29,4 +29,14 @@ public class ConsultasJDBCController {
 		return conexionService.sacarVinosPorPais(pais);
 	}
 	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+
+	@ResponseBody
+	@GetMapping("/comprobarNuevaInsercion")
+	public String comprobarNuevaInsercion(String pais) {
+		return conexionService.comprobarNuevaInsercion();
+	}
+					////////NO TERMINADO////////
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+
 }

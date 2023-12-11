@@ -3,16 +3,20 @@ package com.api.api_vinos.controller;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.api_vinos.entity.DatosTecnicosDTO;
 import com.api.api_vinos.entity.VinoDTO;
 import com.api.api_vinos.service.ScraperService;
+import com.api.api_vinos.service.ScraperServiceImpl;
 
 
 
@@ -22,6 +26,7 @@ public class ScraperController {
 
     @Autowired
     ScraperService scraperService;
+    ScraperServiceImpl scraperServiceImpl;
 
     @GetMapping(path = "/scraper/prueba-scrapper")
     public String comprobarConexion() {
@@ -58,5 +63,33 @@ public class ScraperController {
     @GetMapping(path = "/scraper/datos-tecnicos")
     List<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(){
     	return scraperService.getListDatosTecnicosDTO();
-    };
+    }
+    
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+	    
+	@ResponseBody
+	@GetMapping("/insertarVinoConTimerTask")
+	public void insertarVinoConTimerTask(String pagina) {
+		
+		// Crear una instancia de Timer
+        Timer timer = new Timer();
+
+        // Crear una instancia de TimerTask
+        TimerTask tarea = new MiTimerTask();
+
+        // Programar la tarea para ejecutarse cada 5000 milisegundos (5 segundos)
+        timer.schedule(tarea, 0, 20000);
+
+		//scraperService.insertarVinoConTimerTask(pagina);
+	}
+	
+	public class MiTimerTask extends TimerTask {
+        @Override
+        public void run() {
+        	String pagina = "";
+        	scraperService.insertaVinosPorPagHTMLTimerTask(pagina);
+        }
+    }
+	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 }

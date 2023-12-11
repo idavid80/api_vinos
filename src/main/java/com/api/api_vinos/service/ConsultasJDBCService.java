@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.api_vinos.entity.Vino;
+import com.api.api_vinos.entity.Vino_DatosTecnicos_aux;
 import com.api.api_vinos.repository.ConsultasJDBCRepository;
 
 
@@ -16,12 +16,10 @@ public class ConsultasJDBCService {
 	protected ConsultasJDBCRepository bbddRepositorio;
 	
 	
-	public ArrayList<Vino> sacarDatosVino() {
+	public ArrayList<Vino_DatosTecnicos_aux> sacarDatosVino() {
 		
-		ArrayList<Vino> listaVinos = new ArrayList<Vino>();
+		ArrayList<Vino_DatosTecnicos_aux> listaVinos = new ArrayList<Vino_DatosTecnicos_aux>();
 		listaVinos = bbddRepositorio.sacarDatosVino();
-		
-		
 		
 		return listaVinos;
 	}
@@ -37,5 +35,14 @@ public class ConsultasJDBCService {
 		
 		return listaNombres;
 	}
+	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+
+	public String comprobarNuevaInsercion() {
+		
+		return null;
+	}
+										////////NO TERMINADO////////
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 		
 }

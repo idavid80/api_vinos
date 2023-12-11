@@ -184,5 +184,32 @@ public class ConexionBD {
 		}
 		cerrarConexion();
 	}
+	
+	
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+	public void insertarVinoConTimerTask(VinoDTO vinoDTO) {
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO Api_vino.Vinos (modelo, url, imagen ) VALUES (?, ?, ?);";
+		// String sql = "insert into preguntas values (?,?)";
+		abrirConexion();
+
+		try {
+			// Statement stmt = conexion.createStatement();
+
+			pstmt = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+			pstmt.setString(1, vinoDTO.getModeloVino());
+			pstmt.setString(2, vinoDTO.getUrl());
+			pstmt.setString(3, vinoDTO.getImagen());
+
+			pstmt.executeUpdate();
+
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrarConexion();
+	}
+	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 
 }

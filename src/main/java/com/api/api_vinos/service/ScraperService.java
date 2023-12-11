@@ -19,6 +19,11 @@ public interface ScraperService {
 	List<DatosTecnicosDTO> getListDatosTecnicosDTO();
 	
 	int insertaDatosTecnicosBD();
+
+/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+	void insertaVinosPorPagHTMLTimerTask(String pagina);
+/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
+	
 	
 	//Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(vinoDTOS vino);
 
