@@ -146,7 +146,7 @@ public class ScraperServiceImpl implements ScraperService {
 
 		repo.abrirConexion();
 
-		int vinosIntroducidos = 0;
+		int vinosIntroducidos = 1;
 		for (VinoDTO vino : listaVinos) {
 			repo.insertarVino(vino);
 
