@@ -3,6 +3,7 @@ package com.api.api_vinos.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +21,16 @@ public class VinoJPA {
 	@Column(name="imagen")
 	String imagen;
 
+	@ManyToOne
+	DatosTecnicosJpa datosTecnicosJpa;
+	
+	public DatosTecnicosJpa getDatosTecnicosJpa() {
+		return datosTecnicosJpa;
+	}
+	public void setDatosTecnicosJpa(DatosTecnicosJpa datosTecnicosJpa) {
+		this.datosTecnicosJpa = datosTecnicosJpa;
+	}
+	
 	public VinoJPA(int id_vino, String modelo, String url, String imagen) {
 		super();
 		this.id_vino = id_vino;

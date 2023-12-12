@@ -9,15 +9,7 @@ public class DatosTecnicosDTO {
 	String region;
 	int idModeloVino;
 	
-	@ManyToOne
-	DatosTecnicosJpa datosTecnicosJpa;
-	
-	public DatosTecnicosJpa getDatosTecnicosJpa() {
-		return datosTecnicosJpa;
-	}
-	public void setDatosTecnicosJpa(DatosTecnicosJpa datosTecnicosJpa) {
-		this.datosTecnicosJpa = datosTecnicosJpa;
-	}
+
 	public int getIdDatosTecnicos() {
 		return idDatosTecnicos;
 	}
