@@ -30,7 +30,6 @@ public class ScraperServiceImpl implements ScraperService {
 
 		// Set para almacenar elementos únicos
 		Set<VinoDTO> vinoDTOS = new HashSet<>();
-		// Pasando por las urls
 
 		// metodo para extraer datos de wineissocial.com
 		extraerDatosWineIsSocial(vinoDTOS, pagina);
@@ -44,8 +43,10 @@ public class ScraperServiceImpl implements ScraperService {
 		String url = "https://wineissocial.com/1719-vinos?page=";
 		// Set para almacenar elementos únicos
 		Set<VinoDTO> vinoDTOS = new HashSet<>();
-		// Pasando por las urls
+
+		// Obtener el numero de paginasa del html
 		int numeroPaginaHTML = getNumeroPaginasHTML(url);
+
 		// metodo para extraer datos de wineissocial.com
 		for (int i = 1; i < numeroPaginaHTML; i++) {
 			extraerDatosWineIsSocial(vinoDTOS, String.valueOf(i));
@@ -56,7 +57,9 @@ public class ScraperServiceImpl implements ScraperService {
 
 	@Override
 	public Set<VinoDTO> getVinoDesdeHasta(String desde, String hasta) {
+
 		int inicio = Integer.parseInt(desde);
+
 		int fin = Integer.parseInt(hasta);
 		// Set para almacenar elementos únicos
 		Set<VinoDTO> vinoDTOS = new HashSet<>();
@@ -73,7 +76,9 @@ public class ScraperServiceImpl implements ScraperService {
 	private int getNumVinoPorPagina(String url) {
 
 		int vinoPorPagina = 0;
+
 		try {
+
 			Document document = Jsoup.connect(url).get();
 			vinoPorPagina = document.getElementsByClass("product-meta").size();
 
@@ -90,7 +95,10 @@ public class ScraperServiceImpl implements ScraperService {
 		int paginasHTML = 1;
 		try {
 			Document document = Jsoup.connect(url + paginasHTML).get();
+
+			// obtiene un string con el último numero de paginacion del html
 			String obtenerNumeroPagina = document.getElementsByAttributeValue("rel", "nofollow").last().text();
+
 			paginasHTML = Integer.parseInt(obtenerNumeroPagina);
 
 		} catch (IOException ex) {
@@ -106,12 +114,16 @@ public class ScraperServiceImpl implements ScraperService {
 
 		try {
 			Document document = Jsoup.connect(url + paginaHTML).get();
+
+			// obtenemos el numero de vino que hay en una pagina
 			int vinoPorPagina = getNumVinoPorPagina(url + paginaHTML);
 
 			for (int i = 0; i < vinoPorPagina; i++) {
-				System.out.println("Extrayendo " + vinoPorPagina + " vinos pagina: " + i + "/" + vinoPorPagina);
-				//
+
+				// div donde se encuentran los datos tecnicos
 				Element element = document.getElementsByClass("product-meta").get(i);
+
+				// div donde se encuentra la imagen del vino
 				Element imagenes = document.getElementsByClass("product-image").get(i);
 				// obtener todos los elementos con la clase donde estan los datos para la BBDD
 				Elements elements = element.getElementsByTag("a");
@@ -147,8 +159,10 @@ public class ScraperServiceImpl implements ScraperService {
 
 		repo.abrirConexion();
 
-		int vinosIntroducidos = 1;
+		int vinosIntroducidos = 0;
 		for (VinoDTO vino : listaVinos) {
+
+			// Ejecuta la sentancia sql para insertar en la base datos
 			repo.insertarVino(vino);
 
 			vinosIntroducidos++;
@@ -167,8 +181,10 @@ public class ScraperServiceImpl implements ScraperService {
 
 	public int insertaVinosPorPagHTML(String pagina) {
 
+		// Transformamos el set a una lista de vinos
 		List<VinoDTO> listaVinos = hashToList(getVinoPorPagina(pagina));
 
+		// Itera la lista de vinos en sentencia sql de insertar
 		int vinosIntroducidos = insertarVino(listaVinos);
 
 		return vinosIntroducidos;
@@ -180,6 +196,7 @@ public class ScraperServiceImpl implements ScraperService {
 
 //		int numeroVinos = hash.size();
 		for (VinoDTO vino : hash) {
+
 			lista.add(vino);
 		}
 

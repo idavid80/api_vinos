@@ -1,4 +1,5 @@
 package com.api.api_vinos.entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -8,6 +9,7 @@ public class DatosTecnicosDTO {
 	String region;
 	int idModeloVino;
 	
+
 	public int getIdDatosTecnicos() {
 		return idDatosTecnicos;
 	}
