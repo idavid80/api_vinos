@@ -20,6 +20,8 @@ public interface ScraperService {
 	
 	int insertaDatosTecnicosBD();
 	
+	String guardarImagen();
+	
 	//Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(vinoDTOS vino);
 
 

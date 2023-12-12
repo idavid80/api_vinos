@@ -59,4 +59,10 @@ public class ScraperController {
     List<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(){
     	return scraperService.getListDatosTecnicosDTO();
     };
+    
+    @GetMapping(path = "/scraper/guardar-imagen")
+    String guardarImagen(){
+    	return scraperService.guardarImagen();
+    };
+    
 }

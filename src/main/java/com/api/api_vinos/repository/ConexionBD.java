@@ -21,11 +21,11 @@ public class ConexionBD {
 
 	public Connection abrirConexion() {
 
-		String url = "jdbc:mysql://localhost:3306/";
+		String url = "jdbc:mariadb://localhost:3306/";
 		String usuario = "root";
-		String clave = "Se13jjl46";
+		String clave = "1234";
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, usuario, clave);
 			System.out.println("Conectado");
 
