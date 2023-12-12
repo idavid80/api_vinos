@@ -8,6 +8,19 @@ Repositorio destinado para el trabajo de acceso a base de datos de 2ª DAM. Se c
 
 Mediantes peticiones podemos obtener los vinos. 
 
+### Funcionalidades.
+
+Genera una base de datos Sql, dos tablas, inserta datos y muestra sus contenidos mediante peticiones utilizando driver JDBC.
+
+Extrae datos de una página web mediante peticiones. Los datos pueden ser mostrados o insertados en una base de datos relacional.
+
+Utiliza peticiones a la base de datos por JPA.
+
+Permite guardar las imágenes del html en un archivo .jpg.
+
+Comprueba y actualiza la base de datos con la web a través de TimerTask.
+
+
 ### Tecnologia utilizada.
 
 
@@ -20,13 +33,15 @@ Mediantes peticiones podemos obtener los vinos.
 
 ### Dependencias externas de la libreria mavern.
 
-JSoup API muy práctica para obtener URL y extraer y manipular datos, utilizando lo mejor de los métodos DOM de HTML5 y los selectores CSS. [Jsoup](https://mvnrepository.com/artifact/org.jsoup/jsoup).<img align="left" src="https://www.appbrain.com/stats/libraries/square-icon/jsoup.png" width="100" alt="Jsoup"> 
+<img align="left" src="https://www.appbrain.com/stats/libraries/square-icon/jsoup.png" width="100" alt="Jsoup"> [Jsoup](https://mvnrepository.com/artifact/org.jsoup/jsoup). API muy práctica para obtener URL y extraer y manipular datos, utilizando lo mejor de los métodos DOM de HTML5 y los selectores CSS. 
 
-Proyecto de Jakarta que extiende la funcionalidad del paquete estándar java.lang. [Apache commons lang](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3).<img align="left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apache_Commons_logo.svg/1200px-Apache_Commons_logo.svg.png" width="100" alt="Apache commons lang"> 
+<img align="left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apache_Commons_logo.svg/1200px-Apache_Commons_logo.svg.png" width="100" alt="Apache commons lang"> [Apache commons lang](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3).Proyecto de Jakarta que extiende la funcionalidad del paquete estándar java.lang. 
 
 
 ### Herramientas de trabajo.
 
-Metodología y organización de trabajo [Trello](https://trello.com/).<img align="right" src="https://i.pcmag.com/imagery/reviews/04C2m2ye5UfXyb5x5WWIsZ4-19..v1625759628.png" width="100" alt="Trello"> 
+<img align="right" src="https://i.pcmag.com/imagery/reviews/04C2m2ye5UfXyb5x5WWIsZ4-19..v1625759628.png" width="100" alt="Trello"> [Trello](https://trello.com/) Metodología y organización de trabajo 
+
+
 
 

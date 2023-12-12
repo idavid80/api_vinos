@@ -38,23 +38,24 @@ public class ScraperController {
 
         return  scraperService.getVinoDesdeHasta(desde, hasta);
     }
-    
+    // Obtiene todo los vinos que hay en el html
     @GetMapping(path = "/todos_los_vinos")
     public Set<VinoDTO> getTodosLosVino() {
 
-
         return  scraperService.getTodosLosVino();
     }
-    
+    // Inserta los vinos por pagina del html en la base de datos
     @GetMapping(path = "/scraper/insertar-vinos{pagina}")
     public int insertaVinosPorPagHTML(String pagina) {
     	return  scraperService.insertaVinosPorPagHTML(pagina);
     	
     }
+    // Inserta los datos tecnicos de los vinos que existen en la base de datos
     @GetMapping(path = "/scraper/insertar-datos-tecnicos")
     int insertaDatosTecnicosBD(){
     	return scraperService.insertaDatosTecnicosBD();
     }
+    // Muestra los datos tecnicos de los vinos que hay en la pagina del html
     @GetMapping(path = "/scraper/datos-tecnicos")
     List<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(){
     	return scraperService.getListDatosTecnicosDTO();

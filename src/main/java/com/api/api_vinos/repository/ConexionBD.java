@@ -23,7 +23,7 @@ public class ConexionBD {
 
 		String url = "jdbc:mysql://localhost:3306/";
 		String usuario = "root";
-		String clave = "Se13jjl46";
+		String clave = "";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, usuario, clave);

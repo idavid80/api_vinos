@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.api_vinos.entity.DatosTecnicosDTO;
 import com.api.api_vinos.entity.VinoDTO;
 import com.api.api_vinos.service.CreacionBaseDatosService;
 
@@ -42,6 +41,7 @@ public class CreacionBaseController {
 		conexionService.crearTablaDatosTecnicos();
         return "Tabla Datos Tecnicos creada con exito";
     }
+    
     @GetMapping(path = "/bbdd/get-all")
     public List<VinoDTO> getAllVinos() {
 		return conexionService.getAllVinos();

@@ -13,11 +13,10 @@ public class ConexionRepository {
 public Connection conexion; 
 	
 	public Connection abrirConexion() {
-		String connectionUrl =
-                "jdbc:mariadb://localhost:3306/bbdd";
+		String connectionUrl = "jdbc:mysql://localhost:3306/";
 
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection(
                     connectionUrl, "root", "");
             System.out.println("Conectado...");
