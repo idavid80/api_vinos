@@ -18,25 +18,15 @@ public class ConsultasJDBCController {
 	
 	
 	@ResponseBody
-	@GetMapping("/mostrarDatosVino")
+	@GetMapping("/mostrarDatosVino")	//Metodo que devuelve por postman un ArrayList con los datos de los vinos
 	public ArrayList<Vino_DatosTecnicos_aux> mostrarDatosVino() {
 		return conexionService.sacarDatosVino();
 	}
 	
 	@ResponseBody
-	@GetMapping("/mostrarVinosPorPais")
+	@GetMapping("/mostrarVinosPorPais")	//Metodo que devuelve por postman un ArrayList con vinos segun un pais introducido
 	public ArrayList<String> mostrarVinosPorPais(String pais) {
 		return conexionService.sacarVinosPorPais(pais);
 	}
 	
-	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
-
-	@ResponseBody
-	@GetMapping("/comprobarNuevaInsercion")
-	public String comprobarNuevaInsercion(String pais) {
-		return conexionService.comprobarNuevaInsercion();
-	}
-					////////NO TERMINADO////////
-	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
-
 }

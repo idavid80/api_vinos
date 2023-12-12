@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Repository;
 
 
-@Repository
+@Repository		//CLASE DE PRUEBA PARA LA CONEXION DE LA BASE DE DATOS, NO SE USA EN EL RESTO DEL PROGRAMA, SOLO ES PARA PROBAR LO QUE LUEGO SE INSERTA EN ConexionBD
 public class ConexionRepository {
 
 public Connection conexion; 
@@ -18,7 +18,7 @@ public Connection conexion;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection(
-                    connectionUrl, "root", "");
+                    connectionUrl, "root", "Se13jjl46");
             System.out.println("Conectado...");
         } catch (SQLException | ClassNotFoundException ce) {
             ce.printStackTrace();

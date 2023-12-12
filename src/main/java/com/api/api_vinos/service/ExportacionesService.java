@@ -22,18 +22,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
 import com.api.api_vinos.entity.Vino_DatosTecnicos_aux;
-import com.api.api_vinos.repository.ConsultasJDBCRepository;
+import com.api.api_vinos.repository.ConexionBD;
 
 @Service
 public class ExportacionesService {
 
 	@Autowired
-	protected ConsultasJDBCRepository bbddRepositorio;
+	protected ConexionBD bbddRepositorio;
 
+	/*Metodo de generacion automatica de XML en el que 
+	 * tira de el metodo de recogida de datos de la clase ConexionBD
+	 este metodo recoge el identificador, el nombre, la region, el pais y la url*/
 	public void generarXML() {
 			
 		ArrayList<Vino_DatosTecnicos_aux> listaVinos = new ArrayList<Vino_DatosTecnicos_aux>();
-		listaVinos = bbddRepositorio.sacarDatosVino();
+		listaVinos = bbddRepositorio.sacarDatosVino(); //aqui cargamos la lista de los vinos mediante el metodo insertado en la clase ConexionBD
 					
 		
 		 try {
@@ -50,22 +53,25 @@ public class ExportacionesService {
 			 // Creo los elementos
 			 for (int x = 0; x < listaVinos.size(); x++) {
 				  
+				 //Elemento padre "vino" con un atributo identificador
 				 Element elementVino = documento.createElement("vino");
-				 elementVino.setAttribute("identificador", listaVinos.get(0).toString());
+				 elementVino.setAttribute("identificador", Integer.valueOf(listaVinos.get(x).getId()).toString());
+				 //hijo de "vino" llamado "nombre"
 				 Element elementCampoNombre = documento.createElement("nombre");
-				 Text textNombre = documento.createTextNode(listaVinos.get(1).toString());
+				 Text textNombre = documento.createTextNode(listaVinos.get(x).getNombre());
 				 elementCampoNombre.appendChild(textNombre);
 				 elementVino.appendChild(elementCampoNombre);
+				 //hijo de "vino" llamado region, con un atributo que identifica al pais al que pertenece dicha region
 				 Element elementCampoRegion = documento.createElement("region");
-				 Text textRegion = documento.createTextNode(listaVinos.get(2).toString());
-				 elementCampoRegion.setAttribute("pais", listaVinos.get(3).toString());
+				 Text textRegion = documento.createTextNode(listaVinos.get(x).getRegion());
+				 elementCampoRegion.setAttribute("pais", listaVinos.get(x).getPais());
 				 elementCampoRegion.appendChild(textRegion);
+				 //hijo de "vino" llamado url
 				 Element elementCampoURL = documento.createElement("url");
-				 Text textURL = documento.createTextNode(listaVinos.get(4).toString());
+				 Text textURL = documento.createTextNode(listaVinos.get(x).getUrl());
 				 elementVino.appendChild(elementCampoURL);
 				 elementVino.appendChild(elementCampoRegion);
 				 documento.getDocumentElement().appendChild(elementVino);
-	
 			 }
 
 			 // Asocio el source con el Document

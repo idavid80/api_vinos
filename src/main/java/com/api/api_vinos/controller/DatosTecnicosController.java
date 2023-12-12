@@ -19,49 +19,14 @@ public class DatosTecnicosController {
     DatosTecnicosService datosTecnicos;
     
     
-
-    @GetMapping(path = "/datos-tecnicos/prueba")
+    @GetMapping(path = "/datos-tecnicos/prueba")	//Prueba de conexion
     public String comprobarConexion() {
         return "Controlador funcionando correctamente";
     }
     
-    @GetMapping(path = "/datos-tecnicos/getDatosTecnicosDTOPorPagina")
+    @GetMapping(path = "/datos-tecnicos/getDatosTecnicosDTOPorPagina")	//Metodo que devuelve datos tecnicos desde la pagina web a la base
     Set<DatosTecnicosDTO> getDatosTecnicosDTOPorPagina(@PathVariable String pagina){
     	return datosTecnicos.getDatosTecnicosDTOPorPagina(pagina);
     }
-    /*
-    @GetMapping(path = "/datos-tecnicos/idModeloVino{idModeloVino}")
-    public DatosTecnicosDTO getDatosTecnicosById(@PathVariable String idModeloVino) {
-    	System.out.print("Controlador" + idModeloVino);
-        return  datosTecnicos.getDatosTecnicosById(idModeloVino);
-     
-    }
    
-    @GetMapping(path = "/datos-tecnicos/idVino{idModeloVino}")
-    public String getDatosTecnicosById(@PathVariable String idModeloVino) {
-    	System.out.print("Controlador" + idModeloVino);
-        return  idModeloVino;
-     
-    }
-     
-    @GetMapping(path = "/datos-tecnicos/region{region}")
-    public DatosTecnicosDTO getVinosPorRegiones(@PathVariable String region) {
-    	
-        return  datosTecnicos.getVinosPorRegiones(region);
-    }
-    
-    @GetMapping(path = "/datos-tecnicos/pais{pais}")
-    public DatosTecnicosDTO getVinosPorRPaises(@PathVariable String pais) {
-    	
-        return  datosTecnicos.getVinosPorPaises(pais);
-    }
-   
-    
-    @GetMapping(path = "/datos-tecnicos/insertar-datos-tecnicos")
-    public List<DatosTecnicosDTO> insertarDatosTecnicosBD() {
-    	
-        return  datosTecnicos.insertarDatosTecnicosBD();
-    }
-     */
-    
 }

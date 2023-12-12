@@ -17,33 +17,26 @@ public class CreacionBaseController {
 
 	@Autowired
 	CreacionBaseDatosService conexionService;
-	/*
-	@ResponseBody
-	@GetMapping("/crearBaseDatos")
-	public String crearBaseDatos() {
-		conexionService.crearBase();
-		return "Base de datos creada";
-	}
-*/
-    @GetMapping(path = "/bbdd/crear-db")
+
+    @GetMapping(path = "/bbdd/crear-db")	//Metodo de creacion de base de datos
     public String crearBaseDatos() {
 		conexionService.crearBaseDatos();
         return "Base datos creada con exito";
     }
 
-    @GetMapping(path = "/bbdd/crear-tabla-vino")
+    @GetMapping(path = "/bbdd/crear-tabla-vino")	//Metodo de creacion de tabla de vino
     public String crearTablaVinos() {
 		conexionService.crearTablaVinos();
         return "Tabla Vinos creada con exito";
     }
 
-    @GetMapping(path = "/bbdd/crear-tabla-datos-tecnicos")
+    @GetMapping(path = "/bbdd/crear-tabla-datos-tecnicos")	//Metodo de creacion de tabla de datos por vino
     public String crearTablaDatosTecnicos() {
 		conexionService.crearTablaDatosTecnicos();
         return "Tabla Datos Tecnicos creada con exito";
     }
     
-    @GetMapping(path = "/bbdd/get-all")
+    @GetMapping(path = "/bbdd/get-all")	//Metodo que retorna una lista con todos los vinos y sus datos
     public List<VinoDTO> getAllVinos() {
 		return conexionService.getAllVinos();
 

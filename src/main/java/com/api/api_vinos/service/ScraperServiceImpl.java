@@ -1,11 +1,17 @@
 package com.api.api_vinos.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TimerTask;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -19,7 +25,7 @@ import com.api.api_vinos.entity.DatosTecnicosDTO;
 import com.api.api_vinos.entity.VinoDTO;
 import com.api.api_vinos.repository.ConexionBD;
 
-@Service
+@Service	//En esta clase encontramos los distintos metodos necesarios para el web scrapping (implementa de la interfaz ScraperService)
 public class ScraperServiceImpl implements ScraperService {
 
 	@Autowired
@@ -269,6 +275,61 @@ public class ScraperServiceImpl implements ScraperService {
 		}
 	}
 	
+
+	// Archivo File
+	public String guardarImagen() {
+		
+		List<VinoDTO> listaVino = hashToList(getVinoPorPagina("3"));
+		
+		copiarImagen(listaVino.get(0).getImagen(), listaVino.get(0).getModeloVino());
+		
+		return "imagen " +listaVino.get(0).getModeloVino() + " guardada";
+		
+	}
+	
+	public void copiarImagen(String url, String modelo) {
+
+		try {
+		/* definimos la URL de la cual vamos a leer */
+
+		URL obtenerURL = new URL(url);
+		/* llamamos metodo para que lea de la URL y lo escriba en le fichero pasado */
+		writeTo(obtenerURL.openStream(), new FileOutputStream(new File("./src/imagenes/" + modelo + ".jpg" )));
+
+		System.out.println("Imagen leida y guardada!");
+
+		} catch (MalformedURLException e) {
+		e.printStackTrace();
+
+		} catch (FileNotFoundException e) {
+		e.printStackTrace();
+
+		} catch (IOException e) {
+		e.printStackTrace();
+
+		}
+		}
+
+
+		public static void writeTo(InputStream in, OutputStream out) throws IOException {
+		try {
+		int c;
+		while ((c = in.read()) != -1) {
+		out.write(c);
+		}
+
+		} finally {
+		if (in!= null) {
+			try{ in.close(); 
+			} catch (Exception e) {} }
+		if (out!= null) { 
+			try{ out.close();
+			} catch (Exception e) {} }
+		}
+
+		return;
+		}
+	
 	
 	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 	
@@ -284,7 +345,7 @@ public class ScraperServiceImpl implements ScraperService {
 	
 	repo.abrirConexion();
 	
-	int vinosIntroducidos = 1;
+	int vinosIntroducidos = 0;
 	for (VinoDTO vino : listaVinos) {
 	repo.insertarVinoConTimerTask(vino);
 	
@@ -300,72 +361,3 @@ public class ScraperServiceImpl implements ScraperService {
 	
 	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 }
-/*
- * 
- * 
- * public void setDatosTecnicos(DatosTecnicosDTO datosTecnicos, String url) {
- * 
- * extraerDatosTecnicos(datosTecnicos, url);
- * System.out.println("setDatosTecnicos" + datosTecnicos);
- * 
- * }
- * 
- * private void extraerDatosTecnicos(DatosTecnicosDTO datos, String url) {
- * 
- * datos = new DatosTecnicosDTO();
- * 
- * // Obtenemos el ID del modelo vino
- * 
- * 
- * try {
- * 
- * // Buscamos en la url de datos tecnicos del modelo de vino Document document
- * = Jsoup.connect(url).get();
- * 
- * // Obtener elementos de los lista datos tecnicos del html Element element =
- * document.getElementsByClass("especial izda col-xs-6").first();
- * 
- * datos.setPais(element.getElementsByClass("pais").text().replace("País: ",
- * "")); datos.setRegion(element.getElementsByClass("denominacion").text().
- * replace("Zona/D.O.: ", ""));
- * 
- * } catch (IOException ex) { ex.printStackTrace();
- * 
- * } System.out.println("extraerDatosTecnicos" + datos); }
- * 
- * public DatosTecnicosDTO rellenarDatosTecnicosDTO(VinoDTO vino) {
- * DatosTecnicosDTO datosTecnicos = new DatosTecnicosDTO();
- * 
- * datosTecnicos.setIdModeloVino(vino.getIdModeloVino());
- * 
- * extraerDatosTecnicos(datosTecnicos, vino.getUrl());
- * 
- * System.out.println("rellenarDatosTecnicosDTO" + datosTecnicos); return
- * datosTecnicos;
- * 
- * 
- * } public List<DatosTecnicosDTO> insertarDatosTecnicosBD() {
- * 
- * List<DatosTecnicosDTO> listaDTO = new ArrayList<>(); // Obtenemos una lista
- * de vinos desde la base Datos
- * 
- * List<VinoDTO> listavinos = repo.getAllVinos();
- * 
- * System.out.println("insertarDatosTecnicosBD" + listavinos); try {
- * 
- * 
- * for (VinoDTO vino : listavinos) {
- * 
- * listaDTO.add(rellenarDatosTecnicosDTO(vino)); } } catch (Exception ex) {
- * ex.printStackTrace();
- * 
- * }
- * 
- * 
- * 
- * // repo.insertarDatosTecnicos(datosTecnicosDTO);
- * 
- * return listaDTO;
- * 
- * }
- */

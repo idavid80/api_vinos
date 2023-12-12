@@ -12,11 +12,6 @@ import com.api.api_vinos.repository.ConexionBD;
 
 @Service
 public class CreacionBaseDatosService {
-	/*
-	 * @Autowired protected CreacionBaseDatosRepository bbddRepositorio;
-	 * 
-	 * public void crearBase() { bbddRepositorio.creacionBaseDatos(); }
-	 */
 
 	@Autowired
 	protected ConexionBD repo;

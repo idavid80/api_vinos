@@ -6,6 +6,7 @@ import java.util.Set;
 import com.api.api_vinos.entity.DatosTecnicosDTO;
 import com.api.api_vinos.entity.VinoDTO;
 
+//Clase interfaz de los metodos necesarios para el web scrapping
 public interface ScraperService {
 	// public Set<ResponseDTO> getModeloVino(String modeloVino);
 	Set<VinoDTO> getVinoPorPagina(String pagina);
@@ -19,6 +20,8 @@ public interface ScraperService {
 	List<DatosTecnicosDTO> getListDatosTecnicosDTO();
 	
 	int insertaDatosTecnicosBD();
+	
+	String guardarImagen();
 
 /////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 	void insertaVinosPorPagHTMLTimerTask(String pagina);

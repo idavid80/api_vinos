@@ -21,15 +21,7 @@ public class VinoJPA {
 	@Column(name="imagen")
 	String imagen;
 
-	@ManyToOne
-	DatosTecnicosJpa datosTecnicosJpa;
-	
-	public DatosTecnicosJpa getDatosTecnicosJpa() {
-		return datosTecnicosJpa;
-	}
-	public void setDatosTecnicosJpa(DatosTecnicosJpa datosTecnicosJpa) {
-		this.datosTecnicosJpa = datosTecnicosJpa;
-	}
+
 	
 	public VinoJPA(int id_vino, String modelo, String url, String imagen) {
 		super();

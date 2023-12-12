@@ -13,17 +13,18 @@ import org.springframework.stereotype.Repository;
 
 import com.api.api_vinos.entity.DatosTecnicosDTO;
 import com.api.api_vinos.entity.VinoDTO;
+import com.api.api_vinos.entity.Vino_DatosTecnicos_aux;
 
 @Repository
-public class ConexionBD {
+public class ConexionBD {	//Esta clase se usa para la conexion, creacion, insercion y consultas con la base de datos
 
 	public Connection conexion;
-
+	
 	public Connection abrirConexion() {
 
 		String url = "jdbc:mysql://localhost:3306/";
 		String usuario = "root";
-		String clave = "";
+		String clave = "Se13jjl46";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, usuario, clave);
@@ -137,14 +138,13 @@ public class ConexionBD {
 		return listaVinos;
 	}
 
+	//Metodo de insercion de vinos en la base de datos, tirando de entidad propia pasada por parametros
 	public void insertarVino(VinoDTO vinoDTO) {
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO Api_vino.Vinos (modelo, url, imagen ) VALUES (?, ?, ?);";
-		// String sql = "insert into preguntas values (?,?)";
 		abrirConexion();
 
 		try {
-			// Statement stmt = conexion.createStatement();
 
 			pstmt = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -161,14 +161,13 @@ public class ConexionBD {
 		cerrarConexion();
 	}
 
+	//Metodo de insercion de datos tecnicos en la base de datos, tirando de entidad propia pasada por parametros
 	public void insertarDatosTecnicos(DatosTecnicosDTO datosTecnicos) {
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO Api_vino.Datos_tecnicos (pais, region, id_vino) VALUES (?, ?, ?);";
-		// String sql = "insert into preguntas values (?,?)";
 		abrirConexion();
 
 		try {
-			// Statement stmt = conexion.createStatement();
 
 			pstmt = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -184,6 +183,7 @@ public class ConexionBD {
 		}
 		cerrarConexion();
 	}
+	
 	
 	
 	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
@@ -212,4 +212,61 @@ public class ConexionBD {
 	}
 	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 
+	
+	
+	/*Este metodo recoge datos de todos los vinos insertados en la Base de datos, dichos datos son ID, nombre, region, pais y url
+	lo recoge por medio de un ResultSet y una ArrayList de tipo propio*/
+	public ArrayList<Vino_DatosTecnicos_aux> sacarDatosVino() {
+		
+		ArrayList<Vino_DatosTecnicos_aux> listaDatos = new ArrayList<Vino_DatosTecnicos_aux>();
+		Vino_DatosTecnicos_aux vino = new Vino_DatosTecnicos_aux();
+		Statement stmt = null;
+		abrirConexion();
+		try {
+			
+			stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from api_vino.vinos \r\n"
+								+ "inner join datos_tecnicos on datos_tecnicos.id_vino = vinos.id_vino ");
+			while (rs.next()) {
+				vino.setId(rs.getInt("id_vino"));
+				vino.setNombre(rs.getString("modelo"));
+				vino.setRegion(rs.getString("region"));
+				vino.setPais(rs.getString("pais"));
+				vino.setUrl(rs.getString("url"));
+				listaDatos.add(vino);
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		cerrarConexion();
+		
+		return listaDatos;
+	}
+	
+	/*Este metodo es similar al anterior, pero con la diferencia de que solo recoge los nombres de los vinos seleccionados por pais,
+	 * recogiendo por tanto solo el nombre en un ArrayList de tipo String*/
+	public ArrayList<String> sacarVinosPorPais(String pais) {
+		ArrayList<String> listaNombre = new ArrayList<String>();
+		ResultSet rs;
+		abrirConexion();
+		try {
+			Statement stmt = conexion.createStatement();
+			rs = stmt.executeQuery("Select Vinos.modelo from Vinos "
+							+ "inner join Datos_tecnicos on Vinos.id_vino = Datos_tecnicos.id_vino"
+							+ "where Datos_tecnicos.pais = " + pais +";");
+			
+			while (rs.next()) {
+				listaNombre.add(rs.getString("modelo")); 
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		cerrarConexion();
+		
+		return listaNombre;
+	}
 }

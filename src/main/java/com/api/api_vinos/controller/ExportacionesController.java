@@ -14,7 +14,7 @@ public class ExportacionesController {
 	protected ExportacionesService conexionService;
 	
 	@ResponseBody
-    @GetMapping("/generarXML")
+    @GetMapping("/generarXML")	//Metodo de generacion de archivos XML
 	public void generarXML() {
 		conexionService.generarXML();
 	}

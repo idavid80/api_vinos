@@ -66,11 +66,16 @@ public class ScraperController {
     	return scraperService.getListDatosTecnicosDTO();
     }
     
+    @GetMapping(path = "/scraper/guardar-imagen")
+    String guardarImagen(){
+    	return scraperService.guardarImagen();
+    };
+    
 	/////////////////////////////// PARTE DE PROGRAMACION DE PROCESOS/////////////////////////////////////////////////////////////
 	    
 	@ResponseBody
 	@GetMapping("/insertarVinoConTimerTask")
-	public void insertarVinoConTimerTask(String pagina) {
+	public void insertarVinoConTimerTask() {
 		
 		// Crear una instancia de Timer
         Timer timer = new Timer();
@@ -87,7 +92,7 @@ public class ScraperController {
 	public class MiTimerTask extends TimerTask {
         @Override
         public void run() {
-        	String pagina = "";
+        	String pagina = "https://wineissocial.com/1719-vinos?page=3";
         	scraperService.insertaVinosPorPagHTMLTimerTask(pagina);
         }
     }
