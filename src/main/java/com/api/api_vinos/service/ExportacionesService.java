@@ -33,7 +33,7 @@ public class ExportacionesService {
 	/*Metodo de generacion automatica de XML en el que 
 	 * tira de el metodo de recogida de datos de la clase ConexionBD
 	 este metodo recoge el identificador, el nombre, la region, el pais y la url*/
-	public void generarXML() {
+	public String generarXML() {
 			
 		ArrayList<Vino_DatosTecnicos_aux> listaVinos = new ArrayList<Vino_DatosTecnicos_aux>();
 		listaVinos = bbddRepositorio.sacarDatosVino(); //aqui cargamos la lista de los vinos mediante el metodo insertado en la clase ConexionBD
@@ -89,6 +89,8 @@ public class ExportacionesService {
 			 System.out.println(ex.getMessage());
 
 		 }
+		 
+		 return "XML CREADO";
 	}
 
 }

@@ -219,7 +219,7 @@ public class ConexionBD {	//Esta clase se usa para la conexion, creacion, inserc
 	public ArrayList<Vino_DatosTecnicos_aux> sacarDatosVino() {
 		
 		ArrayList<Vino_DatosTecnicos_aux> listaDatos = new ArrayList<Vino_DatosTecnicos_aux>();
-		Vino_DatosTecnicos_aux vino = new Vino_DatosTecnicos_aux();
+		
 		Statement stmt = null;
 		abrirConexion();
 		try {
@@ -228,6 +228,7 @@ public class ConexionBD {	//Esta clase se usa para la conexion, creacion, inserc
 			ResultSet rs = stmt.executeQuery("select * from api_vino.vinos \r\n"
 								+ "inner join datos_tecnicos on datos_tecnicos.id_vino = vinos.id_vino ");
 			while (rs.next()) {
+				Vino_DatosTecnicos_aux vino = new Vino_DatosTecnicos_aux();
 				vino.setId(rs.getInt("id_vino"));
 				vino.setNombre(rs.getString("modelo"));
 				vino.setRegion(rs.getString("region"));
@@ -255,8 +256,8 @@ public class ConexionBD {	//Esta clase se usa para la conexion, creacion, inserc
 		try {
 			Statement stmt = conexion.createStatement();
 			rs = stmt.executeQuery("Select Vinos.modelo from Vinos "
-							+ "inner join Datos_tecnicos on Vinos.id_vino = Datos_tecnicos.id_vino"
-							+ "where Datos_tecnicos.pais = " + pais +";");
+							+ "inner join datos_tecnicos on datos_tecnicos.id_vino = vinos.id_vino"
+							+ "where datos_tecnicos.pais = 'francia';");
 			
 			while (rs.next()) {
 				listaNombre.add(rs.getString("modelo")); 
